@@ -41,7 +41,7 @@ StatsAPI operates as a standalone repository that:
 
 1. Maintains metrics in `stats.json`.  
 2. Publishes the JSON file via GitHub Pages at a stable HTTPS URL:  
-   `https://amjadkudsi.github.io/statsync-controller/stats.json`  
+   `https://amjadkudsi.github.io/StatSync-Controller/stats.json`  
 3. Serves as the data source for multiple downstream systems:
    - Shields dynamic JSON badges in the GitHub profile  
    - Portfolio website counters that fetch the same endpoint  
