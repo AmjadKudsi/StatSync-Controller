@@ -5,7 +5,7 @@
 
 ---
 
-## Architecture Diagram
+## Simple Architecture
 
 ```mermaid 
 flowchart LR
