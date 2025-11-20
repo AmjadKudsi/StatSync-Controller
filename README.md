@@ -1,11 +1,11 @@
 # StatsAPI
 
-**Technical Report Repository**  
-**Author:** Amjad Kudsi  
+## Technical Report Repository  
+## Author: Amjad Kudsi  
 
 ---
 
-## Simple Architecture
+## Architecture Diagram
 
 ```mermaid 
 flowchart LR
@@ -31,7 +31,7 @@ This design removes the need to redeploy frontend applications when updating the
   Detailed documentation of the system design, rationale, and architectural evolution.
 
 - `README.md` (this document)  
-  High level overview suitable for GitHub visitors, recruiters, and technical reviewers.
+  High-level overview suitable for GitHub visitors, recruiters, and technical reviewers.
 
 ---
 
@@ -71,24 +71,7 @@ This configuration provides a unified and reliable data access layer.
   The JSON file functions as a lightweight API that is accessible over HTTPS.
 
 - **Deterministic Deployments**  
-  One commit triggers one deployment, with no cross repository workflows.
-
----
-
-## Design Rationale
-
-The architecture emphasizes clarity, maintainability, and correctness:
-
-- A single JSON document prevents divergence across systems.  
-- Static hosting through GitHub Pages offers predictable version control and delivery.  
-- Dynamic Shields badges act as a passive monitoring layer, confirming deployment success.  
-- Removal of previously used multi repository synchronization logic eliminates:
-  - cross repository authentication  
-  - fine grained access tokens  
-  - workflow complexity  
-  - redundant deployments  
-
-The resulting system is minimal yet technically robust.
+  One commit triggers one deployment, with no cross-repository workflows.
 
 ---
 
@@ -98,20 +81,9 @@ The resulting system is minimal yet technically robust.
   Displays metric badges powered by Shields dynamic JSON queries referencing the StatsAPI endpoint.
 
 - **Portfolio Website**  
-  Fetches and animates the metric values through client side JavaScript using the same endpoint.
+  Fetches and animates the metric values through client-side JavaScript using the same endpoint.
 
 Both surfaces remain fully synchronized with no manual coordination.
-
----
-
-## Future Extensions
-
-Potential enhancements include:
-
-- Automated metric population via official APIs, if made available in the future  
-- Scheduled or event driven updates to `stats.json`  
-- Historical data logging and visualization  
-- Additional endpoints for derived or aggregated metrics  
 
 ---
 
