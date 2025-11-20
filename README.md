@@ -23,7 +23,7 @@ flowchart LR
     Pages --> Badges
 ```
 
-**Goal**  
+## Goal  
 Keep three practice metrics in sync across my GitHub profile and portfolio site by editing a single file once per day.
 
 **Key metrics**
