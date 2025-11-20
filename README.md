@@ -1,8 +1,123 @@
-# StatsSync Controller
+# StatsAPI
 
-This repository holds the source of truth for my practice statistics and the workflow that synchronizes them to my GitHub profile.
+**Technical Report Repository**  
+**Author:** Amjad Kudsi  
+**Last Updated:** 2025 11  
+**Purpose:** GitHub hosted metrics endpoint for distributed UI consumers
+
+---
 
 ## Architecture Diagram
+
+```mermaid 
+flowchart LR
+    A["StatsAPI Repository<br/>stats.json (source of truth)"] --> P["GitHub Pages<br/>Public JSON Endpoint"];
+    P --> B["Shields Dynamic JSON Badges"];
+    P --> W["Portfolio Website Metrics"];
+```
+
+## Overview
+
+StatsAPI provides a lightweight and version controlled public metrics endpoint backed by GitHub Pages. It exposes a single JSON document containing numerical indicators used by external user interfaces such as a portfolio website and GitHub profile badges.
+
+This design removes the need to redeploy frontend applications when updating these values and ensures consistency across all consumers by maintaining a single authoritative data source.
+
+---
+
+## Repository Contents
+
+- `stats.json`  
+  Canonical data file representing the latest metric values.
+
+- Technical report (PDF)  
+  Detailed documentation of the system design, rationale, and architectural evolution.
+
+- `README.md` (this document)  
+  High level overview suitable for GitHub visitors, recruiters, and technical reviewers.
+
+---
+
+## System Architecture
+
+StatsAPI operates as a standalone repository that:
+
+1. Maintains metrics in `stats.json`.  
+2. Publishes the JSON file via GitHub Pages at a stable HTTPS URL:  
+   `https://amjadkudsi.github.io/statsync-controller/stats.json`  
+3. Serves as the data source for multiple downstream systems:
+   - Shields dynamic JSON badges in the GitHub profile  
+   - Portfolio website counters that fetch the same endpoint  
+
+This configuration provides a unified and reliable data access layer.
+
+---
+
+## Data Flow Summary
+
+1. `stats.json` is updated manually.  
+2. GitHub Pages automatically redeploys the repository.  
+3. Consumer systems fetch the updated metrics from the public endpoint.  
+4. No frontend redeployment or manual synchronization is required.
+
+---
+
+## Key Properties
+
+- **Single Source of Truth**  
+  All consumer systems read the same JSON document, ensuring consistency.
+
+- **No Redeployment Overhead**  
+  Frontend applications remain untouched; only this repository is updated.
+
+- **Stable Public Interface**  
+  The JSON file functions as a lightweight API that is accessible over HTTPS.
+
+- **Deterministic Deployments**  
+  One commit triggers one deployment, with no cross repository workflows.
+
+---
+
+## Design Rationale
+
+The architecture emphasizes clarity, maintainability, and correctness:
+
+- A single JSON document prevents divergence across systems.  
+- Static hosting through GitHub Pages offers predictable version control and delivery.  
+- Dynamic Shields badges act as a passive monitoring layer, confirming deployment success.  
+- Removal of previously used multi repository synchronization logic eliminates:
+  - cross repository authentication  
+  - fine grained access tokens  
+  - workflow complexity  
+  - redundant deployments  
+
+The resulting system is minimal yet technically robust.
+
+---
+
+## Consumers
+
+- **GitHub Profile**  
+  Displays metric badges powered by Shields dynamic JSON queries referencing the StatsAPI endpoint.
+
+- **Portfolio Website**  
+  Fetches and animates the metric values through client side JavaScript using the same endpoint.
+
+Both surfaces remain fully synchronized with no manual coordination.
+
+---
+
+## Future Extensions
+
+Potential enhancements include:
+
+- Automated metric population via official APIs, if made available in the future  
+- Scheduled or event driven updates to `stats.json`  
+- Historical data logging and visualization  
+- Additional endpoints for derived or aggregated metrics  
+
+---
+
+## Previous Architecture (StatsSync)
 
 ```mermaid
 flowchart LR
@@ -22,58 +137,3 @@ flowchart LR
     Pages --> Portfolio
     Pages --> Badges
 ```
-
-```mermaid
-flowchart LR
-    A["StatsAPI Repository<br/>stats.json (source of truth)"] --> P["GitHub Pages<br/>Public JSON Endpoint"];
-    P --> B["Shields Dynamic JSON Badges"];
-    P --> W["Portfolio Website Metrics"];
-```
-
-## Goal  
-Keep three practice metrics in sync across my GitHub profile and portfolio site by editing a single file once per day.
-
-**Key metrics**
-- Projects completed
-- CodeSignal practice problems solved
-- LeetCode problems solved
-
-## Architecture overview
-
-- **Repo A (controller)**
-  - Contains `stats.json` as the single source of truth for the three metrics.
-  - A GitHub Actions workflow runs on push to `stats.json`.
-  - The workflow:
-    - checks out Repo A
-    - clones Repo B using a fine-grained personal access token
-    - copies `stats.json` into the root of Repo B
-    - commits and pushes only if the file has changed
-
-- **Repo B (profile)**
-  - GitHub profile repo: `AmjadKudsi/AmjadKudsi`.
-  - GitHub Pages is enabled.
-  - Serves `stats.json` at  
-    `https://amjadkudsi.github.io/AmjadKudsi/stats.json`.
-  - README uses Shields dynamic JSON badges to display the metrics.
-
-- **Consumers**
-  - GitHub profile badges (Shields dynamic JSON).
-  - Portfolio website, which fetches the same `stats.json` and animates the counters in the UI.
-
-## Data and deployment flow
-
-1. I edit the three numbers in `stats.json` in Repo A and push.
-2. The sync workflow in Repo A updates `stats.json` in Repo B if there is any change.
-3. A single commit in Repo B triggers one GitHub Pages deployment.
-4. Both the profile badges and the portfolio site read the updated values from the same JSON endpoint.
-
-## Design principles
-
-- Single source of truth (only one file to edit).
-- Separation of concerns:
-  - Repo A controls data and sync.
-  - Repo B handles profile and hosting.
-- Clean deployments:
-  - Repo B gets only one commit per update, so older deployments are not cancelled.
-- Consistent views:
-  - All clients read from the same JSON file served by GitHub Pages.
