@@ -23,10 +23,12 @@ flowchart LR
     Pages --> Badges
 ```
 
+```mermaid
 flowchart LR
     A["StatsAPI Repository<br/>stats.json (source of truth)"] --> P["GitHub Pages<br/>Public JSON Endpoint"];
     P --> B["Shields Dynamic JSON Badges"];
     P --> W["Portfolio Website Metrics"];
+```
 
 ## Goal  
 Keep three practice metrics in sync across my GitHub profile and portfolio site by editing a single file once per day.
