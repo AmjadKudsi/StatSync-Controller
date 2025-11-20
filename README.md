@@ -27,7 +27,7 @@ This design removes the need to redeploy frontend applications when updating the
 - `stats.json`  
   Canonical data file representing the latest metric values.
 
-- **Technical report** (PDF)  
+- `StatsAPI.pdf`  
   Detailed documentation of the system design, rationale, and architectural evolution.
 
 - `README.md` (this document)  
