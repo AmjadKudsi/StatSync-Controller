@@ -9,7 +9,7 @@
 
 ```mermaid 
 flowchart LR
-    A["StatsAPI Repository<br/>stats.json<br/>s(source of truth)"] --> P["GitHub Pages<br/>Public JSON Endpoint"];
+    A["StatsAPI Repository<br/>stats.json<br/>(source of truth)"] --> P["GitHub Pages<br/>Public JSON Endpoint"];
     P --> B["Shields Dynamic JSON Badges"];
     P --> W["Portfolio Website Metrics"];
 ```
