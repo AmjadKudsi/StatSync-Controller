@@ -31,7 +31,7 @@ Keep three practice metrics in sync across my GitHub profile and portfolio site 
 - CodeSignal practice problems solved
 - LeetCode problems solved
 
-**Architecture overview**
+## Architecture overview
 
 - **Repo A (controller)**
   - Contains `stats.json` as the single source of truth for the three metrics.
@@ -53,14 +53,14 @@ Keep three practice metrics in sync across my GitHub profile and portfolio site 
   - GitHub profile badges (Shields dynamic JSON).
   - Portfolio website, which fetches the same `stats.json` and animates the counters in the UI.
 
-**Data and deployment flow**
+## Data and deployment flow
 
 1. I edit the three numbers in `stats.json` in Repo A and push.
 2. The sync workflow in Repo A updates `stats.json` in Repo B if there is any change.
 3. A single commit in Repo B triggers one GitHub Pages deployment.
 4. Both the profile badges and the portfolio site read the updated values from the same JSON endpoint.
 
-**Design principles**
+## Design principles
 
 - Single source of truth (only one file to edit).
 - Separation of concerns:
