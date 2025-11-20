@@ -77,7 +77,7 @@ This configuration provides a unified and reliable data access layer.
 
 ## Consumers
 
-- **GitHub Profile**  
+- [**GitHub Profile**](https://github.com/AmjadKudsi#-socials)  
   Displays metric badges powered by Shields dynamic JSON queries referencing the StatsAPI endpoint.
 
 - **Portfolio Website**  
