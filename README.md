@@ -2,8 +2,6 @@
 
 **Technical Report Repository**  
 **Author:** Amjad Kudsi  
-**Last Updated:** 2025 11  
-**Purpose:** GitHub hosted metrics endpoint for distributed UI consumers
 
 ---
 
