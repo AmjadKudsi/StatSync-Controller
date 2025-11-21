@@ -1,0 +1,49 @@
+Hypothetical: if millions of consumers try to hit this JSON endpoint, will it work well?
+
+For a personal project, the current StatsAPI endpoint will handle far more traffic than we
+are ever likely to generate, but it is not designed as a high volume, low latency, multi 
+million user production API.
+
+* What GitHub Pages actually is in this context?
+
+The Endpoint: https://amjadkudsi.github.io/statsync-controller/stats.json
+
+It is served by GitHub Pages, which is:
+
+- a static file hosting service optimized for websites and docs
+
+- backed by a content delivery network (CDN)
+
+- subject to GitHub’s general usage and rate limits, not to API style autoscaling
+
+GitHub does not position Pages as an infinite scale public API platform. It is 
+“good enough” for normal website traffic, but it has practical and policy limits.
+
+
+* How it behaves under heavy access?
+
+The file is static, very small, and cached, which is ideal. CDNs are strong at serving the
+same static asset to many clients. For tens, hundreds, even thousands of users, this is 
+trivially fine. But, for millions of active consumers, you are constrained by:
+- GitHub’s traffic limits and fair use, possible rate limiting or 429 responses and 
+potential throttling if GitHub detects abusive patterns.
+
+
+* For realistic usage: is StatsAPI solid?
+Yes, for these scenarios StatsAPI is more than adequate for the portfolio site fetching it
+per page load, few widgets or scripts querying it, recruiters, visitors, or bots 
+occasionally hitting the profile and portfolio or light programmatic use like a dashboard,
+ Notion embed, or Obsidian snippet. In those conditions, the latency is low, caching is 
+ effective, operational cost is zero and maintenance is trivial.
+ 
+ 
+ * What would change at true “millions of users” scale?
+ If this were to evolve into a real public API with millions of monthly active consumers, 
+ an industry standard approach would be:
+ - Moving the JSON hosting to an object store with CDN (for example S3 plus CloudFront, 
+ or equivalent) or a managed edge key value store. 
+ - Introduce proper observability (metrics, logs), rate limiting, and explicit availability 
+ and error handling policies.
+ 
+ Can also add an application layer like a small stateless service and an authentication 
+ or API keys if needed.
